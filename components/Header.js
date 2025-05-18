@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { advisorThemes } from '../app/utils/advisorThemes';
+import Logo from './common/Logo';
 
 const HeaderContainer = styled.header`
   background-color: #0a3977;
@@ -20,16 +21,12 @@ const HeaderContainer = styled.header`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 `;
 
-const Logo = styled.div`
+const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
-  font-size: 20px;
-  font-weight: bold;
 `;
 
-const LogoIcon = styled.div`
-  margin-right: 10px;
-`;
+
 
 const MenuButtonContainer = styled.div`
   position: relative;
@@ -203,15 +200,11 @@ function Header({ activeTab, setActiveTab }) {
   
   return (
     <HeaderContainer>
-      <Logo as={Link} href="/" style={{ textDecoration: 'none', color: 'white', cursor: 'pointer' }}>
-        <LogoIcon>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2" />
-            <path d="M12 6V18M6 12H18" stroke="white" strokeWidth="2" />
-          </svg>
-        </LogoIcon>
-        ChatERP
-      </Logo>
+      <LogoWrapper>
+        <Link href="/" style={{ textDecoration: 'none', color: 'white' }}>
+          <Logo inHeader={true} />
+        </Link>
+      </LogoWrapper>
       
       {/* Theme Switcher */}
       {activeTab !== undefined && setActiveTab && (

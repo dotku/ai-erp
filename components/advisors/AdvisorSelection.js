@@ -1,80 +1,16 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-import styled from "styled-components";
-
-const AdvisorSelectionContainer = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 80px 20px 40px 20px; /* Increased top padding to account for fixed header */
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  margin-bottom: 10px;
-  color: #333;
-`;
-
-const Description = styled.p`
-  color: #666;
-  margin-bottom: 30px;
-  line-height: 1.5;
-`;
-
-const AdvisorsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-`;
-
-const AdvisorCard = styled.div`
-  display: flex;
-  align-items: flex-start;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-`;
-
-const AdvisorIcon = styled.div`
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  background-color: #f0f4f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 16px;
-  color: #3b82f6;
-  font-size: 24px;
-`;
-
-const AdvisorInfo = styled.div`
-  flex: 1;
-`;
-
-const AdvisorName = styled.h3`
-  font-size: 18px;
-  margin-bottom: 8px;
-  color: #333;
-`;
-
-const AdvisorDescription = styled.p`
-  color: #666;
-  font-size: 14px;
-  line-height: 1.5;
-`;
+import {
+  AdvisorSelectionContainer,
+  Title,
+  Description,
+  AdvisorsGrid,
+  AdvisorCard,
+  AdvisorIcon,
+  AdvisorInfo,
+  AdvisorName,
+  AdvisorDescription,
+} from "../../styles/components/advisors/styles";
 
 const advisors = [
   {

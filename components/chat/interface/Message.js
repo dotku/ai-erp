@@ -36,6 +36,7 @@ const Message = ({
 
   // Use the raw content directly
   const content = message.content || "";
+  console.log("content", content);
 
   // Format the timestamp
   const formattedTime = message.timestamp
@@ -44,6 +45,8 @@ const Message = ({
         minute: "2-digit",
       })
     : "";
+
+  console.log("content", content);
 
   return (
     <MessageContainer>
@@ -74,10 +77,7 @@ const Message = ({
                 ),
               }}
             >
-              {JSON.parse(content).content?.replace(
-                "</think>",
-                "\n---\nThinkEND"
-              )}
+              {content}
             </ReactMarkdown>
             {isLoading && message.id === "loading" && (
               <div

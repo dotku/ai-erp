@@ -15,6 +15,12 @@ const SidebarContainer = styled.div`
   z-index: 50;
   padding-bottom: 20px;
   height: calc(100vh - 60px);
+  
+  @media (max-width: 768px) {
+    display: ${props => props.visible ? 'flex' : 'none'};
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
 `;
 
 const ChatHistory = styled.div`
@@ -129,10 +135,11 @@ const Sidebar = ({
   sessionId, 
   startNewSession, 
   loadSession, 
-  deleteSession 
+  deleteSession,
+  showSidebar
 }) => {
   return (
-    <SidebarContainer>
+    <SidebarContainer visible={showSidebar}>
       <div
         style={{ height: "100%", display: "flex", flexDirection: "column" }}
       >

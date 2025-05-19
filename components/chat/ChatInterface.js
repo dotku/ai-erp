@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 // Import components
-import ChatHeader from "./interface/ChatHeader";
+import Header from "../common/Header";
 import MessageList from "./interface/MessageList";
 import InputArea from "./interface/InputArea";
 import Sidebar from "./interface/Sidebar";
@@ -33,6 +33,9 @@ const ChatInterface = ({ advisor }) => {
   
   // Set sidebar visibility - hidden by default on mobile
   const [showSidebar, setShowSidebar] = useState(!isMobile);
+  
+  // Theme state - default to advisor theme or general
+  const [currentTheme, setCurrentTheme] = useState(advisor?.id || "general");
 
   // Use the custom chat hook
   const {
@@ -64,6 +67,18 @@ const ChatInterface = ({ advisor }) => {
       setShowSidebar(false);
     }
   }, [isMobile]);
+  
+  // Update theme when advisor changes
+  useEffect(() => {
+    if (advisor?.id) {
+      setCurrentTheme(advisor.id);
+    }
+  }, [advisor?.id]);
+  
+  // Handle theme change
+  const handleThemeChange = (themeId) => {
+    setCurrentTheme(themeId);
+  };
 
   // Handle sending a message
   const handleSendMessage = () => {
@@ -97,6 +112,20 @@ const ChatInterface = ({ advisor }) => {
 
   return (
     <>
+      {/* Global unified header */}
+      <Header 
+        activeTab={currentTheme}
+        setActiveTab={handleThemeChange}
+        showSidebar={showSidebar}
+        toggleSidebar={toggleSidebar}
+        thinkMode={thinkMode}
+        setThinkMode={setThinkMode}
+        startNewSession={startNewSession}
+        clearConversation={clearConversation}
+        sessionId={sessionId}
+        advisor={advisor}
+      />
+      
       {/* Overlay for mobile when sidebar is visible */}
       {isMobile && <SidebarOverlay visible={showSidebar} onClick={toggleSidebar} />}
       
@@ -116,28 +145,34 @@ const ChatInterface = ({ advisor }) => {
 
         {/* Main content area */}
         <MainContent sidebarVisible={showSidebar}>
-          {/* Chat header with advisor info and controls */}
-          <ChatHeader
-            advisor={advisor}
-            thinkMode={thinkMode}
-            setThinkMode={setThinkMode}
-            toggleSidebar={toggleSidebar}
-            showSidebar={showSidebar}
-            startNewSession={startNewSession}
-            clearConversation={clearConversation}
-            sessionId={sessionId}
-          />
 
           {/* Message display area */}
           {messages.length === 0 ? (
             <>
               <WelcomeMessage>
-                <Logo size="large" />
-                <p>
-                  {advisor
-                    ? advisor.description
-                    : "Ask me anything about your business data or general questions. I'm here to help with financial analysis, inventory management, and more."}
-                </p>
+                {/* Display advisor-specific welcome message for all advisors */}
+                <>
+                  {advisor?.id === "general" ? (
+                    <h2>👋 General Assistant</h2>
+                  ) : advisor?.id === "business-risk" ? (
+                    <h2>📊 Business Risk Compliance Manual</h2>
+                  ) : advisor?.id === "askp&p" || advisor?.id === "askp%26p" ? (
+                    <h2>📝 ChatIFC - AskP&P</h2>
+                  ) : advisor?.id === "document-analyzer" ? (
+                    <h2>📄 Document Analyzer</h2>
+                  ) : advisor?.id === "ask-controllers" ? (
+                    <h2>💸 Financial Controller</h2>
+                  ) : advisor?.id === "blended-finance" ? (
+                    <h2>💰 Blended Finance</h2>
+                  ) : advisor?.id === "askcba" ? (
+                    <h2>🏢 AskCBA</h2>
+                  ) : (
+                    <h2>{advisor?.name || "ChatERP"}</h2>
+                  )}
+                  <p>
+                    {advisor?.description || "Ask me anything about your business data or general questions. I'm here to help with financial analysis, inventory management, and more."}
+                  </p>
+                </>
               </WelcomeMessage>
               <SuggestedPrompts 
                 advisorId={advisor?.id || "general"}
@@ -155,6 +190,7 @@ const ChatInterface = ({ advisor }) => {
               expandedThink={expandedThink}
               toggleThinkExpanded={toggleThinkExpanded}
               parseThinkContent={parseThinkContent}
+              isLoading={isLoading}
             />
           )}
 

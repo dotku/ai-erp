@@ -33,6 +33,8 @@ export const MainContent = styled.div`
     margin-left: 0;
     width: 100%;
     border-radius: 0;
+    /* Always take full width on mobile regardless of sidebar visibility */
+    transition: none;
   }
 `;
 
@@ -195,5 +197,21 @@ export const SidebarToggle = styled.button`
 
   &:hover {
     color: #0d6efd;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 12px;
+    background-color: rgba(13, 110, 253, 0.08);
+    border-radius: 4px;
+    margin-right: 4px;
+    
+    /* Show only the icon on mobile */
+    span {
+      display: none;
+    }
+    
+    svg {
+      margin-right: 0;
+    }
   }
 `;

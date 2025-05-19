@@ -1,22 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import Header from "../components/Header";
-import AdvisorSelection from "../components/AdvisorSelection";
-import ChatInterface from "../components/chat/ChatInterface";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [selectedAdvisor, setSelectedAdvisor] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/chat");
+  }, [router]);
 
   return (
-    <div className="app">
-      <Header />
-
-      {selectedAdvisor ? (
-        <ChatInterface advisor={selectedAdvisor} />
-      ) : (
-        <AdvisorSelection onSelectAdvisor={setSelectedAdvisor} />
-      )}
+    <div className="app-container" style={{ height: "100vh" }}>
+      <div className="content-container" style={{ marginTop: "60px" }}>
+        {/* Redirecting to /chat... */}
+      </div>
     </div>
   );
 }

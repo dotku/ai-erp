@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Header from '../../../components/Header';
+import Header from '../../../components/common/Header';
 import ChatInterface from '../../../components/chat/ChatInterface';
+import styles from './page.module.css';
 
 export default function ChatPage({ params }) {
   const { id } = params;
@@ -56,11 +57,11 @@ export default function ChatPage({ params }) {
   }, [id]);
 
   if (!advisor) {
-    return <div>Loading...</div>;
+    return <div className={styles.loadingContainer}>Loading...</div>;
   }
 
   return (
-    <div className="app">
+    <div className={styles.app}>
       <Header />
       <ChatInterface advisor={advisor} />
     </div>

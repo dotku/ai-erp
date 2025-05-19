@@ -19,10 +19,13 @@ const InputAreaContainer = styled.div`
   backdrop-filter: blur(8px);
   
   @media (max-width: 768px) {
-    padding: 12px 0;
+    padding: 8px 0;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 6px 0;
   }
 `;
-
 const InputContainer = styled.div`
   display: flex;
   align-items: center;
@@ -48,9 +51,16 @@ const InputContainer = styled.div`
   @media (max-width: 768px) {
     width: calc(100% - 24px);
     border-radius: 12px;
+    padding: 6px 10px;
+    min-height: 48px;
+  }
+  
+  @media (max-width: 480px) {
+    width: calc(100% - 16px);
+    padding: 4px 8px;
+    min-height: 44px;
   }
 `;
-
 const TextArea = styled.textarea`
   flex: 1;
   border: none;
@@ -94,6 +104,18 @@ const TextArea = styled.textarea`
     background-color: #e5e5e5;
     color: #8e8ea0;
     cursor: not-allowed;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 6px 8px;
+    font-size: 14px;
+    margin: 0 4px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 4px 6px;
+    font-size: 14px;
+    margin: 0 2px;
   }
 `;
 
@@ -140,6 +162,18 @@ const SendButton = styled.button`
     cursor: not-allowed;
     box-shadow: none;
   }
+  
+  @media (max-width: 768px) {
+    width: 36px;
+    height: 36px;
+    margin-left: 6px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 32px;
+    height: 32px;
+    margin-left: 4px;
+  }
 `;
 
 const InputActions = styled.div`
@@ -148,6 +182,16 @@ const InputActions = styled.div`
   margin-right: 4px;
   padding-right: 8px;
   border-right: 1px solid #e5e5e5;
+  
+  @media (max-width: 768px) {
+    margin-right: 2px;
+    padding-right: 6px;
+  }
+  
+  @media (max-width: 480px) {
+    margin-right: 1px;
+    padding-right: 4px;
+  }
 `;
 
 const ActionButton = styled.button`
@@ -172,6 +216,18 @@ const ActionButton = styled.button`
 
   &:active {
     background-color: #e9ecef;
+  }
+  
+  @media (max-width: 768px) {
+    width: 24px;
+    height: 24px;
+    margin-right: 2px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 22px;
+    height: 22px;
+    margin-right: 0;
   }
 `;
 
@@ -290,7 +346,7 @@ const InputArea = ({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Ask a question. (Shift + Enter for new line)"
+          placeholder="Ask a question..."
           rows={1}
         />
         <SendButton

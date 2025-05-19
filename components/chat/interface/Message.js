@@ -34,8 +34,35 @@ const Message = ({
 }) => {
   if (!message) return null;
 
-  // Use the raw content directly
-  const content = message.content || "";
+  // Process content safely - simplified approach to avoid infinite loops
+  let content = "";
+
+  // Use a try-catch to handle any potential errors
+  try {
+    // If message content is a string, use it directly
+    if (typeof message.content === "string") {
+      content = message.content;
+    }
+    // If it's an object with a content property, use that
+    else if (message.content && typeof message.content.content === "string") {
+      content = message.content.content;
+    }
+    // Otherwise, convert to string or use empty string
+    else {
+      content = String(message.content || "");
+    }
+  } catch (error) {
+    // Fallback in case of any errors
+    content = String(message.content || "");
+    console.error("Error processing message content:", error);
+  }
+
+  try {
+    content = JSON.parse(content).content;
+  } catch (error) {
+    console.warn("format need update", error);
+  }
+
   console.log("content", content);
 
   // Format the timestamp
@@ -45,8 +72,6 @@ const Message = ({
         minute: "2-digit",
       })
     : "";
-
-  console.log("content", content);
 
   return (
     <MessageContainer>
@@ -66,17 +91,7 @@ const Message = ({
           content
         ) : (
           <>
-            <ReactMarkdown
-              remarkPlugins={[remarkBreaks, remarkGfm]}
-              components={{
-                p: ({ node, ...props }) => (
-                  <p
-                    style={{ whiteSpace: "pre-line", marginBottom: "0.75rem" }}
-                    {...props}
-                  />
-                ),
-              }}
-            >
+            <ReactMarkdown remarkPlugins={[remarkBreaks, remarkGfm]}>
               {content}
             </ReactMarkdown>
             {isLoading && message.id === "loading" && (

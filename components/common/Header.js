@@ -139,6 +139,11 @@ const AdvisorButton = styled.button`
   svg {
     margin-right: 8px;
   }
+  
+  /* Hide on mobile devices */
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const ThemeSwitcher = styled.div`
@@ -349,7 +354,7 @@ const Header = ({
         </Link>
       </LogoWrapper>
       
-      {/* Advisor selection */}
+      {/* Advisor selection - desktop only */}
       <div style={{ marginLeft: 'auto', marginRight: '20px', position: 'relative' }}>
         {advisor && (
           <AdvisorButton onClick={() => setThemeDropdownOpen(!themeDropdownOpen)} ref={themeDropdownRef}>

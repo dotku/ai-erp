@@ -27,13 +27,13 @@ const ChatInterface = ({ advisor }) => {
 
   // State
   const [input, setInput] = useState("");
-  
+
   // Check if the device is mobile
-  const isMobile = useMediaQuery('(max-width: 768px)');
-  
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   // Set sidebar visibility - hidden by default on mobile
   const [showSidebar, setShowSidebar] = useState(!isMobile);
-  
+
   // Theme state - default to advisor theme or general
   const [currentTheme, setCurrentTheme] = useState(advisor?.id || "general");
 
@@ -60,21 +60,21 @@ const ChatInterface = ({ advisor }) => {
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
-  
+
   // Update sidebar visibility when screen size changes
   useEffect(() => {
     if (isMobile) {
       setShowSidebar(false);
     }
   }, [isMobile]);
-  
+
   // Update theme when advisor changes
   useEffect(() => {
     if (advisor?.id) {
       setCurrentTheme(advisor.id);
     }
   }, [advisor?.id]);
-  
+
   // Handle theme change
   const handleThemeChange = (themeId) => {
     setCurrentTheme(themeId);
@@ -87,7 +87,7 @@ const ChatInterface = ({ advisor }) => {
     // Send the message and clear input
     sendMessage(input);
     setInput("");
-    
+
     // Scroll to bottom after sending message
     setTimeout(() => {
       const chatContainer = document.querySelector(".message-list");
@@ -105,15 +105,10 @@ const ChatInterface = ({ advisor }) => {
     }
   };
 
-  // Effect to save session when messages change
-  useEffect(() => {
-    // Removed unused code
-  }, [messages, thinkMode]);
-
   return (
     <>
       {/* Global unified header */}
-      <Header 
+      <Header
         activeTab={currentTheme}
         setActiveTab={handleThemeChange}
         showSidebar={showSidebar}
@@ -125,10 +120,12 @@ const ChatInterface = ({ advisor }) => {
         sessionId={sessionId}
         advisor={advisor}
       />
-      
+
       {/* Overlay for mobile when sidebar is visible */}
-      {isMobile && <SidebarOverlay visible={showSidebar} onClick={toggleSidebar} />}
-      
+      {isMobile && (
+        <SidebarOverlay visible={showSidebar} onClick={toggleSidebar} />
+      )}
+
       {/* Chat interface container */}
       <Container>
         {/* Sidebar for chat history */}
@@ -145,7 +142,6 @@ const ChatInterface = ({ advisor }) => {
 
         {/* Main content area */}
         <MainContent sidebarVisible={showSidebar}>
-
           {/* Message display area */}
           {messages.length === 0 ? (
             <>
@@ -170,11 +166,12 @@ const ChatInterface = ({ advisor }) => {
                     <h2>{advisor?.name || "ChatERP"}</h2>
                   )}
                   <p>
-                    {advisor?.description || "Ask me anything about your business data or general questions. I'm here to help with financial analysis, inventory management, and more."}
+                    {advisor?.description ||
+                      "Ask me anything about your business data or general questions. I'm here to help with financial analysis, inventory management, and more."}
                   </p>
                 </>
               </WelcomeMessage>
-              <SuggestedPrompts 
+              <SuggestedPrompts
                 advisorId={advisor?.id || "general"}
                 onPromptClick={(prompt) => {
                   setInput(prompt);
